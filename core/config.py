@@ -1,13 +1,10 @@
-from pydantic import BaseSettings, SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
     weights_path: str
-    bot_token: SecretStr
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    bot_token: str
 
 
 config = Settings()
