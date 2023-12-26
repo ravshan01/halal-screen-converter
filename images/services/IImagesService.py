@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from PIL.Image import Image
-from numpy import ndarray
 
 
 class IImagesService(ABC):
@@ -21,8 +20,5 @@ class IImagesService(ABC):
         pass
 
     @abstractmethod
-    def remove_opacity_data_from_numpy_array(self, image: Image | ndarray) -> ndarray:
-        """
-        numpy array shape (height, width, 4) -> (height, width, 3)
-        """
+    def rgba_2_rgb(self, image: Image) -> Image:
         pass
