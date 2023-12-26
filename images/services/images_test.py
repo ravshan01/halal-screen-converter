@@ -1,0 +1,2 @@
+class TestImageService:
+    pass
