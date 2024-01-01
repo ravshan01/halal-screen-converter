@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from PIL.Image import Image
-
+from PIL import Image
 from detection.protocols.part import DetectionPartProtocol
 
 
