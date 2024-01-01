@@ -30,6 +30,7 @@ class DetectionService(IDetectionService):
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
             "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
         )
+        # TODO: check support cuda and use it
         cfg.MODEL.DEVICE = "cpu"
         self.predictor = DefaultPredictor(cfg)
 
