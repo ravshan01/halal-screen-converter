@@ -1,7 +1,7 @@
 from PIL import Image
 
+from .detection import detection_service
 from detection.enums.type import DetectionType
-from detection.services.detection import detection_service
 from mock.images import room, person, street
 
 
