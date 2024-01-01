@@ -5,9 +5,7 @@ from images.services.IImagesService import IImagesService
 
 class ImagesService(IImagesService):
     def blur(self, image: Image, percentage: int = 50) -> Image:
-        img_copy = image.copy()
-        img_copy.filter(ImageFilter.GaussianBlur(percentage))
-        return img_copy
+        return image.filter(ImageFilter.GaussianBlur(percentage))
 
     def blur_boxes(
         self, image: Image, boxes: list[list[int, int, int, int]], percentage: int = 50
