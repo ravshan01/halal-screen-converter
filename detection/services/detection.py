@@ -49,7 +49,7 @@ class DetectionService(IDetectionService):
                 lambda i: DetectionPart(
                     name=DetectionType.Person,
                     score=person_instances.scores[i].item(),
-                    coords=person_instances.pred_boxes[i].tensor.tolist(),
+                    coords=tuple(person_instances.pred_boxes[i].tensor.tolist()),
                 ),
                 range(len(person_instances)),
             )
