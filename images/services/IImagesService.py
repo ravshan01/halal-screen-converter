@@ -9,7 +9,7 @@ class IImagesService(ABC):
 
     @abstractmethod
     def blur_boxes(
-        self, image: Image, boxes: list[list[int, int, int, int]], percentage: int = 50
+        self, image: Image, boxes: list[tuple[int, int, int, int]], percentage: int = 50
     ) -> Image:
         """
         :param image:
