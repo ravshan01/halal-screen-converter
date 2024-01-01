@@ -39,22 +39,19 @@ class DetectionService(IDetectionService):
         image: Image,
         min_percentage_probability: int = 50,
     ) -> list[DetectionPart]:
-        image_arr = numpy.array(image)
-        outputs = self.predictor(image_arr)
-
-        person_boxes_indexes = []
-        for i, detect_class in enumerate(outputs["instances"].pred_classes):
-            if detect_class.item() == self.person_type:
-                person_boxes_indexes.append(i)
+        outputs = self.predictor(numpy.array(image))
+        person_instances = outputs["instances"][
+            outputs["instances"].pred_classes == self.person_type
+        ]
 
         return list(
             map(
                 lambda i: DetectionPart(
                     name=DetectionType.Person,
-                    score=outputs["instances"].scores[i].item(),
-                    coords=outputs["instances"].pred_boxes[i].tensor.tolist(),
+                    score=person_instances.scores[i].item(),
+                    coords=person_instances.pred_boxes[i].tensor.tolist(),
                 ),
-                person_boxes_indexes,
+                range(len(person_instances)),
             )
         )
 
