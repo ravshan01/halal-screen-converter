@@ -20,8 +20,5 @@ class ImagesService(IImagesService):
 
         return image_copy
 
-    def rgba_2_rgb(self, image: Image) -> Image:
-        return image.convert("RGB")
-
 
 images_service = ImagesService()

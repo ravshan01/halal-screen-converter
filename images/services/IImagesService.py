@@ -18,7 +18,3 @@ class IImagesService(ABC):
         :return image with blured boxes:
         """
         pass
-
-    @abstractmethod
-    def rgba_2_rgb(self, image: Image) -> Image:
-        pass
