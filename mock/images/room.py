@@ -1,1 +1,10 @@
-objects_count = {"Person": 4}
+from pathlib import PurePath
+
+from detection.enums.type import DetectionType
+from mock.type import MockResource, MockResourceEnum
+
+resource = MockResource(
+    type=MockResourceEnum.Image,
+    path=str(PurePath(__file__).parent / "room.jpg"),
+    detections={DetectionType.Person: 4},
+)
