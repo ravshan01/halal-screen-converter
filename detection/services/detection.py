@@ -1,7 +1,7 @@
 import numpy
 
 from detection.enums.type import DetectionType
-from detection.protocols.part import DetectionPartProtocol
+from detection.dataclasses.part import DetectionPart
 from detection.services.IDetectionService import IDetectionService
 from PIL import Image
 
@@ -38,7 +38,7 @@ class DetectionService(IDetectionService):
         self,
         image: Image,
         min_percentage_probability: int = 50,
-    ) -> list[DetectionPartProtocol]:
+    ) -> list[DetectionPart]:
         image_arr = numpy.array(image)
         outputs = self.predictor(image_arr)
 
@@ -49,11 +49,11 @@ class DetectionService(IDetectionService):
 
         return list(
             map(
-                lambda i: {
-                    "name": DetectionType.Person,
-                    "score": outputs["instances"].scores[i].item(),
-                    "coords": outputs["instances"].pred_boxes[i].tensor.tolist(),
-                },
+                lambda i: DetectionPart(
+                    name=DetectionType.Person,
+                    score=outputs["instances"].scores[i].item(),
+                    coords=outputs["instances"].pred_boxes[i].tensor.tolist(),
+                ),
                 person_boxes_indexes,
             )
         )

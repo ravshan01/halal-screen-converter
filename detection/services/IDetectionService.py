@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from PIL import Image
-from detection.protocols.part import DetectionPartProtocol
+from detection.dataclasses.part import DetectionPart
 
 
 class IDetectionService(ABC):
@@ -11,5 +11,5 @@ class IDetectionService(ABC):
         self,
         image: Image,
         min_percentage_probability: int = 50,
-    ) -> list[DetectionPartProtocol]:
+    ) -> list[DetectionPart]:
         pass

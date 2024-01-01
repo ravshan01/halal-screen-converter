@@ -11,5 +11,4 @@ class TestDetectionService:
             image = Image.open(m.resource.path)
             detections = detection_service.detect(image, min_percentage_probability=30)
 
-            print(len(detections))
             assert len(detections) == m.resource.detections[DetectionType.Person]
