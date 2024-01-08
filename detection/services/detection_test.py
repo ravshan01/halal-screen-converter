@@ -9,7 +9,7 @@ class TestDetectionService:
     def test_detect(self):
         for m in [room, person, street]:
             image = Image.open(m.resource.path)
-            detections = detection_service.detect(image, min_percentage_probability=30)
+            detections = detection_service.detect(image)
 
             # draw = ImageDraw.Draw(image)
             # for detection in detections:

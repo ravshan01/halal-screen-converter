@@ -29,11 +29,7 @@ class DetectionService(IDetectionService):
         cfg.MODEL.DEVICE = "cpu"
         self.predictor = DefaultPredictor(cfg)
 
-    def detect(
-        self,
-        image: Image,
-        min_percentage_probability: int = 50,
-    ) -> list[DetectionPart]:
+    def detect(self, image: Image) -> list[DetectionPart]:
         outputs = self.predictor(numpy.array(image))
         person_instances = outputs["instances"][
             outputs["instances"].pred_classes == self.person_type
