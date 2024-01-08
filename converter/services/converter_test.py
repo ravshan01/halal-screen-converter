@@ -8,12 +8,12 @@ from mock.images import room, street, traffic
 
 
 class TestConverterService:
-    def test_convert(self):
+    def test_convert_image(self):
         for m in [room, street, traffic]:
             with open(m.resource.path, "rb") as image_file:
                 image = image_file.read()
                 image_pil = Image.open(io.BytesIO(image))
-                converted_image = converter_service.convert(image)
+                converted_image = converter_service.convert_image(image)
                 converted_image_pil = Image.open(io.BytesIO(converted_image))
 
                 detections = converter_service.detection_service.detect(image_pil)

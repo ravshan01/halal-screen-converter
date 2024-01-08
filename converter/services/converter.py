@@ -11,7 +11,7 @@ class ConverterService(IConverterService):
     detection_service = detection_service
     images_service = images_service
 
-    def convert(self, image: bytes) -> bytes:
+    def convert_image(self, image: bytes) -> bytes:
         image_pil = Image.open(io.BytesIO(image))
 
         detections = self.detection_service.detect(image_pil)
