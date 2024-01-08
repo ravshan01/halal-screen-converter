@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
 
-from PIL import Image
-
 
 class IConverterService(ABC):
     """Detect and blur persons on image"""
 
     @abstractmethod
-    def convert(self, image: Image) -> Image:
+    def convert(self, image: bytes) -> bytes:
         pass
