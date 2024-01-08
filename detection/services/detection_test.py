@@ -2,12 +2,12 @@ from PIL import Image, ImageDraw
 
 from .detection import detection_service
 from detection.enums.type import DetectionType
-from mock.images import room, person, street
+from mock.images import room, person, street, traffic
 
 
 class TestDetectionService:
     def test_detect(self):
-        for m in [room, person, street]:
+        for m in [room, person, street, traffic]:
             image = Image.open(m.resource.path)
             detections = detection_service.detect(image)
 
