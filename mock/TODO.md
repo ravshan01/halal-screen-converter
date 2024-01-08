@@ -1,0 +1,1 @@
+- use current file name for path argument in MockResource constructor
