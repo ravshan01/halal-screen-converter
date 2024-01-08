@@ -13,4 +13,4 @@ class MockResourceEnum(Enum):
 class MockResource:
     type: MockResourceEnum
     path: str
-    detections: dict[DetectionType, int]
+    detections: dict[DetectionType, int] | None = None
