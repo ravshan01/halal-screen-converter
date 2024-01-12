@@ -1,6 +1,9 @@
 import io
+import tempfile
 
 from PIL import Image
+import cv2
+import numpy as np
 
 from detection.services.detection import detection_service
 from images.services.images import images_service
@@ -12,43 +15,58 @@ class ConverterService(IConverterService):
     images_service = images_service
 
     def convert_image(self, image: bytes) -> bytes:
-        image_pil = Image.open(io.BytesIO(image))
+        blured_image = self.__detect_and_blur(Image.open(io.BytesIO(image)))
 
-        detections = self.detection_service.detect(image_pil)
+        byte_io = io.BytesIO()
+        blured_image.save(byte_io, format="PNG")  # TODO: get format from image
+        return byte_io.getvalue()
+
+    def convert_video(self, video: bytes) -> bytes:
+        temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+        temp_file.write(video)
+        video_path = temp_file.name
+
+        # Создание объекта VideoCapture и открытие временного файла
+        capture = cv2.VideoCapture()
+        capture.open(video_path)
+
+        fps = capture.get(cv2.CAP_PROP_FPS)
+        width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        output = cv2.VideoWriter(
+            "output.mp4",
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            fps,
+            (width, height),
+        )
+
+        while capture.isOpened():
+            ret, frame = capture.read()
+            if not ret:
+                break
+
+            blured_frame = self.__detect_and_blur(Image.fromarray(frame))
+            output.write(np.array(blured_frame))
+
+        output.release()
+        capture.release()
+        temp_file.close()
+
+    def __detect_and_blur(self, image: Image) -> Image:
+        detections = self.detection_service.detect(image)
         boxes = list(
             map(
                 lambda det: tuple(map(lambda coord: int(coord), det.coords)), detections
             )
         )
         blured_image = self.images_service.blur_boxes(
-            image_pil,
+            image,
             boxes=boxes,
             percentage=50,
         )
 
-        byte_io = io.BytesIO()
-        blured_image.save(byte_io, format="PNG")  # TODO: get format from image
-        return byte_io.getvalue()
+        return blured_image
 
 
 converter_service = ConverterService()
-
-#
-# Certainly! I can help you with that. To get video frames using OpenCV in Python, you'll need to follow these steps:
-#
-# Import the necessary libraries: python import cv2
-#
-# Open the video file using cv2.VideoCapture(): python video = cv2.VideoCapture('path_to_video_file.mp4')
-#
-# Iterate over the frames using a loop: ```python while video.isOpened(): ret, frame = video.read()
-#
-# Perform operations on each frame here
-# if not ret: break ```
-#
-# Within the loop, you can perform any desired operations on each frame. For example, you can display each frame using cv2.imshow(): python cv2.imshow('Video', frame)
-#
-# To exit the loop, press the 'q' key: python if cv2.waitKey(1) & 0xFF == ord('q'): break
-#
-# Finally, release the video object and destroy any open windows: python video.release() cv2.destroyAllWindows()
-#
-# That's it! You can modify the code within the loop to perform various operations on each frame, such as saving them as image files, applying image processing techniques, or extracting specific information. Let me know if you need further assistance or have any other questions!
