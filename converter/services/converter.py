@@ -54,7 +54,7 @@ class ConverterService(IConverterService):
         temp_file.close()
 
     def __detect_and_blur(self, image: Image) -> Image:
-        detections = self.detection_service.detect(image)
+        detections = self.detection_service.detect([image])[0]
         boxes = list(
             map(
                 lambda det: tuple(map(lambda coord: int(coord), det.coords)), detections
