@@ -1,3 +1,4 @@
+import torch
 from ultralytics import YOLO
 
 from detection.dataclasses.part import DetectionPart
@@ -10,6 +11,8 @@ class DetectionService(IDetectionService):
     person_type = 0
 
     def __init__(self):
+        if torch.cuda.is_available():
+            torch.cuda.set_device(0)
         self.model = YOLO("yolov8s.pt")
 
     def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
