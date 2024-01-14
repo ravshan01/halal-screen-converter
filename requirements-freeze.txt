@@ -35,6 +35,7 @@ networkx==3.2.1
 numpy==1.26.2
 oauthlib==3.2.2
 omegaconf==2.3.0
+opencv-python==4.9.0.80
 packaging==23.2
 pathspec==0.12.1
 Pillow==10.1.0
