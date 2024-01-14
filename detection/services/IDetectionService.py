@@ -7,5 +7,5 @@ class IDetectionService(ABC):
     """Person detection service interface"""
 
     @abstractmethod
-    def detect(self, image: Image) -> list[DetectionPart]:
+    def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
         pass

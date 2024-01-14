@@ -12,11 +12,14 @@ class DetectionService(IDetectionService):
     def __init__(self):
         self.model = YOLO("yolov8s.pt")
 
-    def detect(self, image: Image) -> list[DetectionPart]:
-        detects = self.model.predict(image, save=True)[0]
+    def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
+        results = self.model.predict(images)
+        return list(map(self.__generate_detections, results))
 
+    def __generate_detections(self, result) -> list[DetectionPart]:
         persons_indexes = []
-        for i, val in enumerate(detects.boxes.cls):
+
+        for i, val in enumerate(result.boxes.cls):
             if val == self.person_type:
                 persons_indexes.append(i)
 
@@ -24,8 +27,8 @@ class DetectionService(IDetectionService):
             map(
                 lambda i: DetectionPart(
                     name=DetectionType.Person,
-                    score=detects.boxes.conf[i].item(),
-                    coords=tuple(detects.boxes.xyxy[i].tolist()),
+                    score=result.boxes.conf[i].item(),
+                    coords=tuple(result.boxes.xyxy[i].tolist()),
                 ),
                 persons_indexes,
             )
