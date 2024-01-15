@@ -1,10 +1,14 @@
+from pathlib import PurePath
+
 import torch
 from ultralytics import YOLO
+from PIL import Image
 
+from core.config import config
+from settings import ROOT_DIR
 from detection.dataclasses.part import DetectionPart
 from detection.enums.type import DetectionType
 from detection.services.IDetectionService import IDetectionService
-from PIL import Image
 
 
 class DetectionService(IDetectionService):
@@ -13,7 +17,8 @@ class DetectionService(IDetectionService):
     def __init__(self):
         if torch.cuda.is_available():
             torch.cuda.set_device(0)
-        self.model = YOLO("yolov8s.pt")
+
+        self.model = YOLO(str(PurePath(ROOT_DIR, config.weights_path, "yolov8s.pt")))
 
     def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
         results = self.model.predict(images)
