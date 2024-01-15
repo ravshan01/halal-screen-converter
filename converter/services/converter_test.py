@@ -25,3 +25,8 @@ class TestConverterService:
                     assert not numpy.array_equal(
                         numpy.array(image_part), numpy.array(converted_image_part)
                     )
+
+    def test_convert_video(self):
+        with open(city_small.resource.path, "rb") as video_file:
+            video = video_file.read()
+            converted_video = converter_service.convert_video(video)
