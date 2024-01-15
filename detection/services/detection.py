@@ -18,7 +18,7 @@ class DetectionService(IDetectionService):
         if torch.cuda.is_available():
             torch.cuda.set_device(0)
 
-        self.model = YOLO(str(PurePath(ROOT_DIR, config.weights_path, "yolov8s.pt")))
+        self.model = YOLO(str(PurePath(ROOT_DIR, config.weights_path)))
 
     def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
         results = self.model.predict(images)
