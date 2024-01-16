@@ -53,7 +53,10 @@ class ConverterService(IConverterService):
         capture.release()
         temp_file.close()
 
-    def __detect_and_blur(self, image: Image) -> Image:
+        with open("output.mp4", "rb") as f:
+            return f.read()
+
+    def __detect_and_blur(self, image: Image, percentage: int) -> Image:
         detections = self.detection_service.detect([image])[0]
         boxes = list(
             map(
