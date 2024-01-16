@@ -14,14 +14,16 @@ class ConverterService(IConverterService):
     detection_service = detection_service
     images_service = images_service
 
-    def convert_image(self, image: bytes) -> bytes:
-        blured_image = self.__detect_and_blur(Image.open(io.BytesIO(image)))
+    def convert_image(self, image: bytes, blur_percentage: int = 50) -> bytes:
+        blured_image = self.__detect_and_blur(
+            Image.open(io.BytesIO(image)), blur_percentage
+        )
 
         byte_io = io.BytesIO()
         blured_image.save(byte_io, format="PNG")  # TODO: get format from image
         return byte_io.getvalue()
 
-    def convert_video(self, video: bytes) -> bytes:
+    def convert_video(self, video: bytes, blur_percentage: int = 50) -> bytes:
         temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
         temp_file.write(video)
         video_path = temp_file.name
@@ -46,7 +48,9 @@ class ConverterService(IConverterService):
             if not ret:
                 break
 
-            blured_frame = self.__detect_and_blur(Image.fromarray(frame))
+            blured_frame = self.__detect_and_blur(
+                Image.fromarray(frame), blur_percentage
+            )
             output.write(np.array(blured_frame))
 
         output.release()
@@ -66,7 +70,7 @@ class ConverterService(IConverterService):
         blured_image = self.images_service.blur_boxes(
             image,
             boxes=boxes,
-            percentage=50,
+            percentage=percentage,
         )
 
         return blured_image
