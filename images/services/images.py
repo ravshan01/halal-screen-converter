@@ -12,8 +12,8 @@ class ImagesService(IImagesService):
         return image.filter(
             ImageFilter.GaussianBlur(
                 (
-                    int((image.width * (percentage / 700))),
-                    int((image.height * (percentage / 700))),
+                    (image.width * (percentage / 700)),
+                    (image.height * (percentage / 700)),
                 )
             )
         )
