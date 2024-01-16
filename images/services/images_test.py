@@ -13,6 +13,12 @@ class TestImageService:
 
         assert not numpy.array_equal(numpy.array(image), numpy.array(blured_image))
 
+    def test_blur_with_zero_percentage(self):
+        image = Image.open(room.resource.path)
+        blured_image = images_service.blur(image, percentage=0)
+
+        assert numpy.array_equal(numpy.array(image), numpy.array(blured_image))
+
     def test_blur_with_invalid_percentage(self):
         image = Image.open(room.resource.path)
 
