@@ -3,6 +3,7 @@ from PIL import Image
 
 from .images import images_service
 from mock.images import room
+from ..errors.invalid_percentage import InvalidPercentageError
 
 
 class TestImageService:
@@ -11,6 +12,14 @@ class TestImageService:
         blured_image = images_service.blur(image, percentage=50)
 
         assert not numpy.array_equal(numpy.array(image), numpy.array(blured_image))
+
+    def test_blur_with_invalid_percentage(self):
+        image = Image.open(room.resource.path)
+
+        try:
+            images_service.blur(image, percentage=101)
+        except Exception as err:
+            assert isinstance(err, InvalidPercentageError)
 
     def test_blur_boxes(self):
         image = Image.open(room.resource.path)
