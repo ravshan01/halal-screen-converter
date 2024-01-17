@@ -25,7 +25,7 @@ class ConverterService(IConverterService):
         return byte_io.getvalue()
 
     def convert_video(self, video: bytes, blur_percentage: int = 50) -> bytes:
-        temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+        temp_file = tempfile.NamedTemporaryFile(suffix=".mp4")
         temp_file.write(video)
         video_path = temp_file.name
 
