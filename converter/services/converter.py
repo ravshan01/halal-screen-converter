@@ -6,14 +6,21 @@ from PIL import Image
 import cv2
 import numpy as np
 
-from detection.services.detection import detection_service
-from images.services.images import images_service
 from .IConverterService import IConverterService
+from detection.services.IDetectionService import IDetectionService
+from images.services.IImagesService import IImagesService
+from detection.services.detection import (
+    detection_service as detection_service_realization,
+)
+from images.services.images import images_service as images_service_realization
 
 
 class ConverterService(IConverterService):
-    detection_service = detection_service
-    images_service = images_service
+    def __init__(
+        self, detection_service: IDetectionService, images_service: IImagesService
+    ):
+        self.detection_service = detection_service
+        self.images_service = images_service
 
     def convert_image(self, image: bytes, blur_percentage: int = 50) -> bytes:
         blured_image = self.__detect_and_blur(
@@ -72,13 +79,15 @@ class ConverterService(IConverterService):
                 lambda det: tuple(map(lambda coord: int(coord), det.coords)), detections
             )
         )
-        blured_image = self.images_service.blur_boxes(
+
+        return self.images_service.blur_boxes(
             image,
             boxes=boxes,
             percentage=percentage,
         )
 
-        return blured_image
 
-
-converter_service = ConverterService()
+converter_service = ConverterService(
+    detection_service=detection_service_realization,
+    images_service=images_service_realization,
+)
