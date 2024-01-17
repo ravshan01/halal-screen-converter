@@ -30,3 +30,4 @@ class TestConverterService:
         with open(city_small.resource.path, "rb") as video_file:
             video = video_file.read()
             converted_video = converter_service.convert_video(video)
+            assert isinstance(converted_video, bytes)
