@@ -1,4 +1,5 @@
 import io
+import os
 import tempfile
 
 from PIL import Image
@@ -58,7 +59,10 @@ class ConverterService(IConverterService):
         temp_file.close()
 
         with open("output.mp4", "rb") as f:
-            return f.read()
+            content = f.read()
+
+        os.remove("output.mp4")
+        return content
 
     def __detect_and_blur(self, image: Image, percentage: int) -> Image:
         detections = self.detection_service.detect([image])[0]
