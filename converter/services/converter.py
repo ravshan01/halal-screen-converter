@@ -37,6 +37,7 @@ class ConverterService(IConverterService):
         width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+        # TODO: get video format
         output = cv2.VideoWriter(
             "output.mp4",
             cv2.VideoWriter_fourcc(*"mp4v"),
