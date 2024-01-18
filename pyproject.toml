@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "halal-screen-converter"
+version = "0.1.0"
+description = ""
+authors = ["Ravshan Selimov <51333533+ravshan01@users.noreply.github.com>"]
+license = "GPL-3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
