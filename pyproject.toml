@@ -16,6 +16,7 @@ pytest-watch = "^4.2.0"
 pydantic = "^2.5.3"
 pydantic-settings = "^2.1.0"
 opencv-python = "^4.9.0.80"
+ultralytics = "^8.1.6"
 
 
 [build-system]
