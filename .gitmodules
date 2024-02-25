@@ -1,0 +1,3 @@
+[submodule "halal-screen-proto"]
+	path = halal-screen-proto
+	url = git@github.com:ravshan01/halal-screen-proto.git
