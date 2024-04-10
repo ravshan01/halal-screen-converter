@@ -16,10 +16,12 @@ pydantic = "^2.5.3"
 pydantic-settings = "^2.1.0"
 opencv-python = "^4.9.0.80"
 ultralytics = "^8.1.6"
-ruff = "^0.2.1"
 grpcio = "^1.62.0"
 grpcio-tools = "^1.62.0"
 
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.5"
 
 [build-system]
 requires = ["poetry-core"]
