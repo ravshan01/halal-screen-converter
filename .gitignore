@@ -1,4 +1,4 @@
-detection/models/*
+detection/weights/*
 !detection/README.md
 
 # Byte-compiled / optimized / DLL files
