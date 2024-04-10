@@ -2,6 +2,7 @@ from concurrent import futures
 from grpc import server as grpc_server
 
 from converter.services.converter import converter_service
+from core.config import config
 from halal_screen_proto.converter_service_pb2_grpc import (
     add_ConverterServiceServicer_to_server,
 )
@@ -15,7 +16,7 @@ def serve():
         ConverterServiceServicer(converter_service), server
     )
 
-    server.add_insecure_port("[::]:50051")
+    server.add_insecure_port(f"[::]:{config.port}")
     server.start()
     print("Server started")
 
