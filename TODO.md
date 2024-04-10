@@ -1,1 +1,3 @@
 - Create poetry script for compile proto
+- Create poetry script for run server
+- Write tests for server
