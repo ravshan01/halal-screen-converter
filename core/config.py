@@ -9,7 +9,6 @@ class Settings(BaseSettings):
     )
 
     port: int
-    bot_token: str
     weights_path: str
 
 
