@@ -8,4 +8,4 @@ class IDetectionService(ABC):
 
     @abstractmethod
     def detect(self, images: list[Image]) -> list[list[DetectionPart]]:
-        pass
+        raise NotImplementedError
