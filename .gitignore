@@ -1,5 +1,5 @@
 detection/models/*
-!detection/models/README.md
+!detection/README.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
